@@ -16,6 +16,11 @@ const config: Config = {
           footer: "#404040",
           light: "#8F8F8F",
           surface: "#EEEEEE",
+          lightest: "#B8B8B8",
+        },
+        red: {
+          primary: "#FF0000",
+          light: "#FFCCCC",
         },
         white: "#FFFFFF",
         black: "#000000",

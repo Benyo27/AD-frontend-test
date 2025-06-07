@@ -1,22 +1,16 @@
 'use client';
+
 import { useSearchParams, useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { useEffect, useState } from 'react';
-import { getGames } from '@/services/games';
 
-export default function GenreFilter() {
+type GenreFilterProps = {
+  filters?: string[];
+};
+
+export default function GenreFilter({ filters }: GenreFilterProps) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const selectedGenre = searchParams.get('genre') || 'All';
-  const [filters, setFilters] = useState<string[]>([]);
-
-  useEffect(() => {
-    const loadFilters = async () => {
-      const data = await getGames();
-      setFilters(data.availableFilters || []);
-    }
-    loadFilters();
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const params = new URLSearchParams(searchParams.toString());
@@ -27,14 +21,14 @@ export default function GenreFilter() {
   };
 
   return (
-    <div className="flex items-center text-gray-primary font-medium text-sm relative">
+    <div className="flex items-center text-gray-primary font-medium text-base relative">
       <select
         value={selectedGenre}
         onChange={handleChange}
         className="w-full appearance-none bg-transparent pr-16 focus:outline-none"
       >
         <option value="All">All</option>
-        {filters.map(genre => (
+        {filters && filters.map(genre => (
           <option key={genre} value={genre}>{genre}</option>
         ))}
       </select>

@@ -8,7 +8,7 @@ import { Game } from "@/utils/endpoint";
 import GameCard from "./components/GameCard";
 import OrderSummary from "./components/OrderSummary";
 
-export default function Home() {
+export default function CartPage() {
   const [cart, setCart] = useState<Game[]>([]);
 
   const handleRemoveFromCart = (gameId: string) => {

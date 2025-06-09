@@ -2,7 +2,6 @@ import { CART_KEY } from "@/config/constants";
 import { Game } from "./endpoint";
 
 export function getCart(): Game[] {
-  if (typeof window === 'undefined') return [];
   const data = localStorage.getItem(CART_KEY);
   return data ? JSON.parse(data) : [];
 }

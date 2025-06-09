@@ -1,4 +1,5 @@
 import { render, screen, fireEvent } from '@testing-library/react';
+import Image from 'next/image';
 import CartPage from '../page';
 import { getCart, removeFromCart } from '@/utils/cart';
 
@@ -7,22 +8,33 @@ jest.mock('@/utils/cart', () => ({
   removeFromCart: jest.fn(),
 }));
 
-jest.mock('../components/GameCard', () => (props: any) => (
-  <div data-testid="game-card">
-    {props.game.name}
-    <img
-      src="/icons/cross.png"
-      alt="Remove from cart"
-      onClick={() => props.onRemove(props.game.id)}
-      data-testid={`remove-${props.game.id}`}
-    />
-    {props.game.isNew && <span>New</span>}
-  </div>
-));
+jest.mock('../components/GameCard', () => {
+  const MockComponent = (props: any) => (
+    <div data-testid="game-card">
+      {props.game.name}
+      <Image
+        src="/icons/cross.png"
+        alt="Remove from cart"
+        width={16}
+        height={16}
+        onClick={() => props.onRemove(props.game.id)}
+        data-testid={`remove-${props.game.id}`}
+      />
+      {props.game.isNew && <span>New</span>}
+    </div>
+  );
+  MockComponent.displayName = 'MockGameCard';
+  return MockComponent;
+});
 
-jest.mock('../components/OrderSummary', () => (props: any) => (
-  <div data-testid="order-summary">{props.games.length} items</div>
-));
+
+jest.mock('../components/OrderSummary', () => {
+  const MockComponent = (props: any) => (
+    <div data-testid="order-summary">{props.games.length} items</div>
+  );
+  MockComponent.displayName = 'MockOrderSummary';
+  return MockComponent;
+});
 
 const mockCart = [
   { id: '1', name: 'Game One', price: 10, isNew: true },

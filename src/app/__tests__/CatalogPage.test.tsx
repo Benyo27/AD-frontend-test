@@ -10,15 +10,30 @@ jest.mock('next/navigation', () => ({
   useRouter: jest.fn(),
 }));
 
-jest.mock('../components/GenreFilter', () => (props: any) => (
-  <div data-testid="genre-filter">{JSON.stringify(props.filters)}</div>
-));
-jest.mock('../components/GameCard', () => (props: any) => (
-  <div data-testid="game-card">{props.game?.title}</div>
-));
-jest.mock('../components/SkeletonCards', () => (props: any) => (
-  <div data-testid="skeleton-cards">{props.count}</div>
-));
+jest.mock('../components/GenreFilter', () => {
+  const MockComponent = (props: any) => (
+    <div data-testid="genre-filter">{JSON.stringify(props.filters)}</div>
+  );
+  MockComponent.displayName = 'MockGenreFilter';
+  return MockComponent;
+});
+
+jest.mock('../components/GameCard', () => {
+  const MockComponent = (props: any) => (
+    <div data-testid="game-card">{props.game?.title}</div>
+  );
+  MockComponent.displayName = 'MockGameCard';
+  return MockComponent;
+});
+
+jest.mock('../components/SkeletonCards', () => {
+  const MockComponent = (props: any) => (
+    <div data-testid="skeleton-cards">{props.count}</div>
+  );
+  MockComponent.displayName = 'MockSkeletonCards';
+  return MockComponent;
+});
+
 jest.mock('@/services/games', () => ({
   getGames: jest.fn(),
 }));
